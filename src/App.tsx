@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import PhotoGallery from "./components/PhotoGallery";
+import "bootstrap/dist/css/bootstrap.css";
+import "./App.css";
+import "../src/components/PhotoGallery.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [likeCount, setLikeCount] = useState(0);
+  const [likedPhotos, setLikedPhotos] = useState<number[]>([]);
+
+  const handleLike = (photoId: number) => {
+    setLikedPhotos((prevLikedPhotos) => [...prevLikedPhotos, photoId]);
+    setLikeCount(likeCount + 1);
+  };
+
+  const handleUnlike = (photoId: number) => {
+    setLikedPhotos((prevLikedPhotos) =>
+      prevLikedPhotos.filter((id) => id !== photoId)
+    );
+    setLikeCount(likeCount - 1);
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>World Places</h1>
+      <p className="like-counter">Likes: {likeCount}</p>
+      <PhotoGallery
+        onLike={handleLike}
+        onUnlike={handleUnlike}
+        likedPhotos={likedPhotos}
+      />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
