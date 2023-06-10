@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Data } from "./data";
 
 interface DataProps {
-  data: Data; // Updated prop name to match the interface
+  data: Data;
 }
 
 const DataComponent: React.FC<DataProps> = ({ data }) => {
